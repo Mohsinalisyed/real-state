@@ -15,16 +15,16 @@ export default function About() {
         <Box className="bg-white">
           <Box className="relative overflow-hidden mb-8">
             <Box className="max-w-full ">
-              <Box className="relative z-10 pb-4 bg-white sm:pb-2 md:pb-4 lg:max-w-2xl lg:w-full lg:pb-4 xl:pb-6">
-                <main className="mt-10 mx-auto max-w-full  sm:mt-12 sm:px-0 md:mt-16 lg:mt-20 lg:px-0 xl:mt-28">
+              <Box className="relative z-10 pb-4 bg-white sm:pb-2 md:pb-0 lg:max-w-2xl lg:w-full lg:pb-0 xl:pb-0">
+                <main className="mt-10 mx-auto max-w-full  sm:mt-12 sm:px-0 md:mt-16 lg:mt-20 lg:px-0 xl:mt-20">
                   <Box className="sm:text-center lg:text-left">
-                    <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                    <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-4xl">
                       <span className="block xl:inline">About</span>{" "}
                       <span className="block text-indigo-600 xl:inline">
                         Our Company
                       </span>
                     </h1>
-                    <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                    <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-sm sm:max-w-xl sm:mx-auto md:mt-5 md:text-lg lg:mx-0">
                       We are a team of passionate inBoxiduals committed to
                       delivering the best products and services to our
                       customers. Our mission is to drive innovation and exceed
@@ -34,7 +34,7 @@ export default function About() {
                       <Box className="rounded-md shadow">
                         <a
                           href="#"
-                          className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                          className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-2 md:text-sm md:px-4"
                         >
                           Learn More
                         </a>
@@ -81,11 +81,11 @@ export default function About() {
                 </svg>
 
                 <Box className="mt-5">
-                  <p className="font-semibold text-5xl text-white">43%</p>
-                  <h3 className="mt-5 font-medium text-lg text-white">
+                  <p className="font-semibold text-3xl text-white">43%</p>
+                  <h3 className="mt-5 font-medium text-md text-white">
                     Enhancement in Customer Engagement
                   </h3>
-                  <p className="mt-1 text-neutral-400">
+                  <p className="mt-1 text-neutral-400 text-sm">
                     With the aim of optimizing customer interactions and
                     boosting brand loyalty, the team at Preline leveraged
                     Mailchimps powerful tools and expertise to deliver
@@ -93,7 +93,7 @@ export default function About() {
                   </p>
                 </Box>
               </Box>
-              <p className="mt-auto">
+              <p className="mt-0">
                 <span className="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
                   Case study
                 </span>
@@ -128,18 +128,18 @@ export default function About() {
                 </svg>
 
                 <Box className="mt-5">
-                  <p className="font-semibold text-5xl text-white">20%</p>
-                  <h3 className="mt-5 font-medium text-lg text-white">
+                  <p className="font-semibold text-3xl text-white">20%</p>
+                  <h3 className="mt-5 font-medium text-md text-white">
                     Rise in E-commerce
                   </h3>
-                  <p className="mt-1 text-neutral-400">
+                  <p className="mt-1 text-neutral-400 text-sm">
                     In collaboration with Shopify, Preline embarked on a mission
                     to revolutionize the e-commerce experience for a fictitious
                     fashion brand, {"StyleAura."}.
                   </p>
                 </Box>
               </Box>
-              <p className="mt-auto">
+              <p>
                 <span className="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
                   Case study
                 </span>
@@ -178,12 +178,11 @@ export default function About() {
                 </svg>
 
                 <Box className="mt-5">
-                  <p className="font-semibold text-5xl text-white">12%</p>
-                  <h3 className="mt-5 font-medium text-lg text-white">
+                  <p className="font-semibold text-3xl text-white">12%</p>
+                  <h3 className="mt-5 font-medium text-md text-white">
                     Streamlining Development
                   </h3>
-                  <p className="mt-1 text-neutral-400">
-                    {" "}
+                  <p className="mt-1 text-neutral-400 text-sm">
                     With the goal of accelerating project delivery and enhancing
                     collaboration among development teams, Preline leveraged
                     GitLabs comprehensive suite of tools and Prelines expertise
@@ -191,23 +190,23 @@ export default function About() {
                   </p>
                 </Box>
               </Box>
-              <p className="mt-auto">
+              <p>
                 <span className="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
                   Case study
                 </span>
               </p>
             </a>
           </Box>
-          <Box className="py-12 bg-white">
+          <Box className="pt-2 pb-12 bg-white">
             <Box className="max-w-full mx-auto  sm:px-6 lg:px-0">
               <Box className="lg:text-center">
                 <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
                   Our Story
                 </h2>
-                <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-3xl">
                   Passion for excellence
                 </p>
-                <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                <p className="mt-4 max-w-2xl text-lg text-gray-500 lg:mx-auto">
                   Founded in 2010, our company has been dedicated to creating
                   high-quality products and services that make a difference in
                   the lives of our customers.
@@ -220,7 +219,7 @@ export default function About() {
                     "https://webfeb.in/wp-content/uploads/2016/11/banner.jpg"
                   }
                   alt="Sample image"
-                  className="w-full h-98 object-cover rounded-lg"
+                  className="w-full h-72 object-cover rounded-lg"
                   loader={({ src }) => `${src}?w=256&h=256`}
                   width={256}
                   height={256}
