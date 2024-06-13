@@ -3,34 +3,38 @@ import { useMutation, UseMutationResult } from "react-query";
 import { uploadImage } from "@/app/services/product";
 
 interface ImageUploadHookResult {
-  imageUrl: string;
-  handleUpload: (file: File) => void;
-  setImageUrl: (e: string) => void;
+  imageUrls: string[];
+  handleUpload: (files: FileList) => void;
+  setImageUrls: (urls: string[]) => void;
   uploading?: boolean;
 }
 
 const useImageUpload = (): ImageUploadHookResult => {
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const { mutate, isLoading }: UseMutationResult = useMutation(uploadImage, {
     onSuccess: (data) => {
       console.log("File uploaded successfully");
-      setImageUrl(data.imageUrl);
+      setImageUrls((prevUrls) => [...prevUrls, data.imageUrls]);
     },
     onError: (error: any) => {
       console.error("Error uploading file", error);
     },
   });
 
-  const handleUpload = (file: File) => {
+  const handleUpload = (files: FileList | null) => {
+    if (!files) return;
+
     const formData = new FormData();
-    formData.append("file", file);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
     mutate(formData);
   };
 
   return {
-    imageUrl,
+    imageUrls,
     handleUpload,
-    setImageUrl,
+    setImageUrls,
     uploading: isLoading,
   };
 };

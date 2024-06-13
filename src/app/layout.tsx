@@ -13,8 +13,8 @@ import Head from "next/head"; // Import Head from next/head
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "RealState",
-  description: "RealState",
+  title: "RealEstate",
+  description: "RealEstate",
 };
 
 export default function RootLayout({

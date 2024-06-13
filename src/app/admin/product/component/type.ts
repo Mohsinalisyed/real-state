@@ -11,25 +11,9 @@ export const productSchema = z.object({
   name: REQUIRED,
   price: NON_ZERO_REQUIRED,
   quantity: NON_ZERO_REQUIRED,
-  image: OPTOPNAL,
+  image: z.array(z.string()).optional(),
   description: REQUIRED,
-  category: REQUIRED,
-  sizeAttribute: z
-    .array(
-      z.object({
-        name: z.string(),
-        value: z.string(),
-      }),
-    )
-    .optional(),
-  colorAttribute: z
-    .array(
-      z.object({
-        name: z.string(),
-        value: z.string(),
-      }),
-    )
-    .optional(),
+  category: OPTOPNAL,
 });
 
 export type IProduct = z.infer<typeof productSchema>;

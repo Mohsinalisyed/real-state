@@ -23,7 +23,7 @@ const Logo = () => {
         </style>
         <g className="ebuy-logo">
           <text x="10" y="25" className="text-ebuy">
-            Real<tspan className="text-buy text-red-500">State</tspan>
+            Real<tspan className="text-buy text-red-500">Estate</tspan>
           </text>
         </g>
       </svg>

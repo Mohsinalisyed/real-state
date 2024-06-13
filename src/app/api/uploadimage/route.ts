@@ -42,32 +42,29 @@ export async function PUT(request: NextRequest) {
   try {
     const formData = await request.formData();
 
-    if (!formData || !formData.has("file")) {
-      console.log("File blob is required.");
+    if (!formData || !formData.has("files")) {
+      console.log("Files blob is required.");
       return NextResponse.json(
-        { error: "File blob is required." },
+        { error: "Files blob is required." },
         { status: 400 },
       );
     }
 
-    const file = formData.get("file") as Blob;
-    console.log("File received:", file);
-
-    const mimeType = file.type;
-    const fileExtension = mimeType.split("/")[1];
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = uuidv4() + "." + fileExtension;
-
-    console.log("Uploading to S3 with fileName:", fileName);
-    const s3Key = await uploadImageToS3(buffer, fileName); // Enhanced error handling and logging
-
-    const imageUrl = `https://d3q5ph1a1lg1pd.cloudfront.net/${s3Key}`;
-    console.log("Upload successful, imageUrl:", imageUrl);
-    return NextResponse.json({ success: true, imageUrl });
+    const files = formData.getAll("files") as Blob[];
+    const uploadResults: string[] = [];
+    for (const file of files) {
+      const mimeType = file.type;
+      const fileExtension = mimeType.split("/")[1];
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const fileName = uuidv4() + "." + fileExtension;
+      const s3Key = await uploadImageToS3(buffer, fileName);
+      uploadResults.push(`https://d3q5ph1a1lg1pd.cloudfront.net/${s3Key}`);
+    }
+    return NextResponse.json({ success: true, imageUrls: uploadResults });
   } catch (error: any) {
-    console.error("Error uploading image:", error);
+    console.error("Error uploading images:", error);
     return NextResponse.json(
-      { error: "Uploading image error" },
+      { error: "Uploading images error" },
       { status: 500 },
     );
   }

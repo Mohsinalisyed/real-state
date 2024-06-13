@@ -18,10 +18,7 @@ import { HeadingS } from "@/app/components/styles";
 import { Box, Button, Flex, MainHeading } from "@/app/lib";
 import { getcategory } from "@/app/services/category";
 import Select from "react-select";
-import AttributeModal from "./AttributeModal";
-import { colors } from "./color";
-import { sizes } from "./size";
-import ButtonComp from "@/app/components/Button";
+
 
 interface IForm {
   productId: string | null;
@@ -36,57 +33,12 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
   const updateid = productId;
   const twElementsLoaded = useTwElements();
   const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSizeOpen, setIsSizeOpen] = useState(false);
-  const [sizeattribute, setSizeAttribute] = useState<IAttribute[]>([]);
-  const [attribute, setAttribute] = useState<IAttribute[]>([]);
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  const openSizeModal = () => {
-    setIsSizeOpen(true);
-  };
-  const closeSizeModal = () => {
-    setIsSizeOpen(false);
-  };
+  
   const handleCategoryChange = (selectedOption: any | null) => {
     setSelectedCategory(selectedOption);
   };
 
-  const handleBoxClick = (name: string, value: string, image?: string) => {
-    const isColorSelected = attribute.some((attr) => attr.name === name);
-    if (isColorSelected) {
-      setAttribute((prevAttributes: any) =>
-        prevAttributes.filter((attr: any) => attr.name !== name),
-      );
-    } else {
-      setAttribute((prevAttributes: any) => [
-        ...(prevAttributes || []),
-        {
-          name: name,
-          value: value,
-          image: image,
-        },
-      ]);
-    }
-  };
-  const handleSizeClick = (name: string, value: string) => {
-    const isColorSelected = sizeattribute.some((attr) => attr.name === name);
-    if (isColorSelected) {
-      setSizeAttribute((prevAttributes: any) =>
-        prevAttributes.filter((attr: any) => attr.name !== name),
-      );
-    } else {
-      setSizeAttribute((prevAttributes: any) => [
-        ...(prevAttributes || []),
-        { name: name, value: value },
-      ]);
-    }
-  };
-  const { imageUrl, setImageUrl, handleUpload } = useImageUpload();
+  const { imageUrls, setImageUrls, handleUpload, uploading } = useImageUpload();
   const { data: products, isLoading: existing } = useQuery(
     "viewproductdetail",
     async () => await viewproductdetail(objectId),
@@ -107,7 +59,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
     image: products?.product?.image,
     quantity: products?.product?.quantity.toString(),
     description: products?.product?.description,
-    category: products?.product?.category, // Ensure this matches the ID in your data
+    category: products?.product?.category,
   };
 
   const defaultValue = {
@@ -134,7 +86,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
 
   const { mutate, isLoading } = useMutation("addproduct", addproduct, {
     onSuccess: () => {
-      setImageUrl("");
+      setImageUrls([]);
       setSelectedCategory(null);
       reset();
     },
@@ -152,7 +104,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
         productId: updateid,
         updatedData: {
           ...data,
-          image: imageUrl,
+          image: imageUrls,
           category: selectedCategory?.label,
         },
       },
@@ -160,40 +112,33 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files && e.target.files[0];
-    if (selectedFile) {
-      handleUpload(selectedFile);
+    const selectedFiles = e.target.files;
+    if (selectedFiles) {
+      handleUpload(selectedFiles);
     }
   };
 
   const onAddProduct = (data: IProduct) => {
-    if (!imageUrl) {
+    if (imageUrls.length===0) {
       setError("image", { message: "This field is required" });
       return;
     }
-    data.sizeAttribute = sizeattribute.map((item) => ({
-      name: item.name,
-      value: item.value,
-    }));
-    data.colorAttribute = attribute.map((item) => ({
-      name: item.name,
-      value: item.value,
-      image: item.image,
-    }));
+   
     data.category = selectedCategory?.label || "";
-    mutate({ ...data, image: imageUrl });
+    data.image = imageUrls;
+    mutate({ ...data });
   };
 
   useEffect(() => {
-    if (imageUrl) {
+    if (imageUrls) {
       clearErrors("image");
     }
-  }, [imageUrl]);
+  }, [imageUrls]);
 
   useEffect(() => {
     if (products) {
       const defaultValues = updateid ? updateDefaultValue : defaultValue;
-      updateid ? setImageUrl(products?.product?.image) : setImageUrl("");
+      updateid ? setImageUrls(products?.product?.image) : setImageUrls([]);
       setSelectedCategory({
         label: products?.product?.category,
         value: products?.product?.categoryId,
@@ -201,7 +146,6 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
       reset(defaultValues);
     }
   }, [reset, objectId, updateid, products]);
-
   return (
     <section>
       {twElementsLoaded && (
@@ -222,15 +166,29 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
                     htmlFor="dropzone-file"
                     className="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
-                    {imageUrl ? (
-                      <Image
-                        src={imageUrl}
-                        alt="Sample image"
-                        className="w-full p-2 mt-1 border rounded-md h-3/5"
-                        loader={({ src }) => `${src}?w=256&h=256`}
-                        width={256}
-                        height={256}
-                      />
+                      {imageUrls.length ? (
+                        <>
+                          {uploading ? (
+                            <div>Uploading...</div>
+                          ) : (
+                              
+                            <div>
+                              {imageUrls.map((url, index) => (
+                               <Image
+                                  key={index}
+                                  src={url[0]}
+                                  alt={`Image ${index}`} 
+                                  className="w-full p-2 mt-1 border rounded-md h-3/5"
+                                  loader={({ src }) => `${src}?w=256&h=256`}
+                                  width={256}
+                                  height={256}
+                                 />
+                              ))}
+                            </div>
+                          )}
+                        </>
+
+                     
                     ) : (
                       <Box className="flex flex-col items-center justify-center pt-5 pb-6 h-96">
                         <UploadSvg />
@@ -248,6 +206,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
                       id="image"
                       accept="image/*"
                       onChange={onFileChange}
+                      multiple // Allow multiple file selection
                       className="w-full p-2 mt-1 border rounded-md"
                     />
                   </label>
@@ -309,14 +268,6 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
                     </span>
                   )}
                 </Box>
-                <Flex className="mb-2">
-                  <ButtonComp type="button" func={openModal} text="Add Color" />
-                  <ButtonComp
-                    type="button"
-                    func={openSizeModal}
-                    text="Add Size"
-                  />
-                </Flex>
                 <Box className="relative mb-6" data-te-input-wrapper-init>
                   <textarea
                     id="description"
@@ -352,28 +303,6 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
             </Box>
           )}
         </form>
-      )}
-      {isModalOpen && (
-        <AttributeModal
-          closeModal={closeModal}
-          title="Add Color"
-          attributeArray={colors}
-          handleBoxClick={(name: string, value: string, image?: string) =>
-            handleBoxClick(name, value, image)
-          }
-          attribute={attribute}
-        />
-      )}
-      {isSizeOpen && (
-        <AttributeModal
-          closeModal={closeSizeModal}
-          title="Add Size"
-          attributeArray={sizes}
-          attribute={sizeattribute}
-          handleBoxClick={(name: string, value: string) =>
-            handleSizeClick(name, value)
-          }
-        />
       )}
     </section>
   );
