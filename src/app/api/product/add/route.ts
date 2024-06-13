@@ -9,21 +9,29 @@ export async function POST(request: NextRequest) {
       name,
       price,
       description,
-      quantity,
       image,
+      size,
       category,
-      sizeAttribute,
-      colorAttribute,
+      location,
+      addressline1,
+      addressline2,
+      city,
+      country
+      
     } = reqBody;
+    const flattenedImageArray = image.flat();
     const newProduct = new Product({
       name,
       price,
       description,
-      quantity,
-      image,
+      image: flattenedImageArray,
       category,
-      sizeAttribute,
-      colorAttribute,
+      size,
+      location,
+      addressline1,
+      addressline2,
+      city,
+      country
     });
     const savedProduct = await newProduct.save();
     return NextResponse.json({

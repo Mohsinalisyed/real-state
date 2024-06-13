@@ -57,7 +57,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
     name: products?.product?.name,
     price: products?.product?.price.toString(),
     image: products?.product?.image,
-    quantity: products?.product?.quantity.toString(),
+    location: products?.product?.location.toString(),
     description: products?.product?.description,
     category: products?.product?.category,
   };
@@ -66,7 +66,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
     name: "",
     price: "",
     image: "",
-    quantity: "",
+    location: "",
     description: "",
     category: "",
   };
@@ -119,7 +119,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
   };
 
   const onAddProduct = (data: IProduct) => {
-    if (imageUrls.length===0) {
+    if (imageUrls?.length===0) {
       setError("image", { message: "This field is required" });
       return;
     }
@@ -146,6 +146,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
       reset(defaultValues);
     }
   }, [reset, objectId, updateid, products]);
+  console.log(errors,'errors')
   return (
     <section>
       {twElementsLoaded && (
@@ -166,7 +167,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
                     htmlFor="dropzone-file"
                     className="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
-                      {imageUrls.length ? (
+                      {imageUrls?.length ? (
                         <>
                           {uploading ? (
                             <div>Uploading...</div>
@@ -235,12 +236,47 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
                 />
 
                 <InputField
-                  id="quantity"
-                  type="number"
+                  id="location"
+                  type="text"
                   register={register}
-                  placeholder="Quantity"
-                  errors={errors?.quantity}
-                />
+                  placeholder="Location"
+                  errors={errors?.location}
+                  />
+                  <InputField
+                    id="addressline1"
+                    type="text"
+                    register={register}
+                    placeholder="Address Line1"
+                    errors={errors?.addressline1}
+                  />
+                  <InputField
+                    id="addressline2"
+                    type="text"
+                    register={register}
+                    placeholder="Address Line2"
+                    errors={errors?.addressline2}
+                  />
+                  <InputField
+                    id="city"
+                    type="text"
+                    register={register}
+                    placeholder="City"
+                    errors={errors?.city}
+                  />
+                  <InputField
+                    id="country"
+                    type="text"
+                    register={register}
+                    placeholder="Country"
+                    errors={errors?.country}
+                  />
+                  <InputField
+                    id="size"
+                    type="text"
+                    register={register}
+                    placeholder="Size"
+                    errors={errors?.size}
+                  />
                 <Box className="mb-6">
                   <Controller
                     name="category"

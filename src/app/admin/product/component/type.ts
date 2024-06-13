@@ -10,10 +10,15 @@ export const productSchema = z.object({
   productId: OPTIONAL_NUMBER,
   name: REQUIRED,
   price: NON_ZERO_REQUIRED,
-  quantity: NON_ZERO_REQUIRED,
+  location: REQUIRED,
+  addressline1:REQUIRED,
+  addressline2:REQUIRED,
+  city: REQUIRED,
+  country: REQUIRED,
+  size:REQUIRED,
   image: z.array(z.string()).optional(),
   description: REQUIRED,
-  category: OPTOPNAL,
+  category: REQUIRED,
 });
 
 export type IProduct = z.infer<typeof productSchema>;
