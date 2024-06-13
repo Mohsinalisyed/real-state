@@ -13,8 +13,8 @@ import Head from "next/head"; // Import Head from next/head
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Q-Buy",
-  description: "E_commerce",
+  title: "RealState",
+  description: "RealState",
 };
 
 export default function RootLayout({
@@ -34,7 +34,7 @@ export default function RootLayout({
           <QueryProvider>
             <CartProvider>
               <Navbar />
-              <div className="pt-16">{children}</div>
+              <div>{children}</div>
               <UserFooter />
             </CartProvider>
             <ToastContainer />

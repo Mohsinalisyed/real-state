@@ -113,7 +113,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="pt-20 flex justify-center items-center bg-gray-100">
+    <section className="pt-32  pb-16 flex justify-center items-center bg-light">
       <Box className="relative flex items-top justify-center bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 max-w-4xl mx-auto mb-6">
         <Box className="w-full">
           <Box className="mb-8 text-center">

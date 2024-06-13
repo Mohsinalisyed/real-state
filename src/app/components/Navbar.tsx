@@ -12,8 +12,6 @@ import { useRouter } from "next/navigation";
 import Logo from "./Logo";
 import useTwElements from "../hooks/useTwElements";
 import SearchBar from "./SearchBar";
-import { getcategory } from "../services/category";
-import { capitalizeFirstLetter } from "../utils/functions";
 import Cookies from "js-cookie"; // Import js-cookie
 
 const Navbar = () => {
@@ -105,32 +103,20 @@ const Navbar = () => {
                         <Box className="flex space-x-4">
                           <Link
                             href="/"
-                            className="block px-3 mt-3 text-base font-medium text-gray-300 rounded-md  hover:text-white"
+                            className="block px-3 mt-0 text-base font-medium text-gray-300 rounded-md  hover:text-white"
                             aria-current="page"
                           >
                             Home
                           </Link>
                           <Link
-                            href="/listproducts"
-                            className="block px-3 mt-3 text-base font-medium text-gray-300 rounded-md  hover:text-white"
-                          >
-                            Products
-                          </Link>
-                          <Link
-                            href="/orders"
-                            className="block px-3 mt-3 text-base font-medium text-gray-300 rounded-md  hover:text-white"
-                          >
-                            Orders
-                          </Link>
-                          <Link
                             href="/aboutus"
-                            className="block px-3 mt-3 text-base font-medium text-gray-300 rounded-md  hover:text-white"
+                            className="block px-3 mt-0 text-base font-medium text-gray-300 rounded-md  hover:text-white"
                           >
                             About
                           </Link>
                           <Link
                             href="/contactus"
-                            className="block px-3 mt-3 text-base font-medium text-gray-300 rounded-md  hover:text-white"
+                            className="block px-3 mt-0 text-base font-medium text-gray-300 rounded-md  hover:text-white"
                           >
                             Contact
                           </Link>
@@ -140,22 +126,8 @@ const Navbar = () => {
                   )}
                 </Box>
                 <Box className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {!!userid && (
-                    <>
-                      <Box className="block px-3 py-2 sm:mt-3 text-base font-medium text-gray-300 rounded-md  hover:text-white">
-                        {!!cartData ? cartData : profileData?.cartItemslength}
-                      </Box>
-                      <Link
-                        href="/cart"
-                        className="relative p-1 sm:mt-3 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-800"
-                      >
-                        <Cart />
-                      </Link>
-                    </>
-                  )}
-
                   {!!userid ? (
-                    <Box className="relative ml-3  sm:mt-3">
+                    <Box className="relative ml-3  sm:mt-0">
                       <Box className="flex items-center justify-end">
                         <Link
                           href={isAdmin ? "/admin/profile" : "/profile"}
@@ -189,14 +161,14 @@ const Navbar = () => {
                     <>
                       <Link
                         href="/login"
-                        className="block px-3 mt-3 text-base font-medium text-white bg-gray-900 rounded-md"
+                        className="block px-3 mt-0 text-base font-medium text-white bg-gray-900 rounded-md"
                         aria-current="page"
                       >
                         Login
                       </Link>
                       <Link
                         href="/signup"
-                        className="block px-3 mt-3 ml-4 text-base font-medium text-white bg-gray-900 rounded-md"
+                        className="block px-3 mt-0 ml-4 text-base font-medium text-white bg-gray-900 rounded-md"
                         aria-current="page"
                       >
                         Signup
@@ -216,18 +188,6 @@ const Navbar = () => {
                         aria-current="page"
                       >
                         Home
-                      </Link>
-                      <Link
-                        href="/listproducts"
-                        className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md  hover:text-white"
-                      >
-                        Products
-                      </Link>
-                      <Link
-                        href="/orders"
-                        className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md  hover:text-white"
-                      >
-                        Orders
                       </Link>
                       <Link
                         href="/aboutus"
@@ -281,11 +241,6 @@ const Navbar = () => {
                 </Box>
               </Box>
             </>
-          )}
-          {!!userid && !isAdmin && (
-            <Box className="relative flex items-center h-16 border-t border-neutral-700">
-              <SearchBar />
-            </Box>
           )}
         </Container>
       </Box>

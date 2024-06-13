@@ -77,18 +77,7 @@ export default function LoginPage() {
     <Container>
       {twElementsLoaded && (
         <Box className="h-screen">
-          <Box className="flex flex-wrap items-center justify-center h-full gap-6 lg:justify-between">
-            <Box className="mb-12 shrink-1 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-              <Image
-                src='/assets/login.png'
-                className="w-full"
-                alt="Sample image"
-                loader={({ src }) => `${src}?w=256&h=256`}
-                width={256}
-                height={256}
-                style={{ borderRadius: "8px" }}
-              />
-            </Box>
+          <Box className="flex flex-wrap items-center justify-center h-full gap-6">
             <AuthCard>
               <Form onSubmit={handleSubmit(onLogin)}>
                 <MainHeading title="Login" />
@@ -119,7 +108,6 @@ export default function LoginPage() {
                   </Button>
                   <HeadingM className="pt-4 mt-2 mb-0 text-sm font-semibold">
                     <span className="pr-2 text-zinc">
-                      {" "}
                       {`Don't have an account?`}
                     </span>
                     <Link
