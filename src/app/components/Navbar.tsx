@@ -11,18 +11,12 @@ import { logoutSuccess } from "../lib/Reducers/loginreducer";
 import { useRouter } from "next/navigation";
 import Logo from "./Logo";
 import useTwElements from "../hooks/useTwElements";
-import SearchBar from "./SearchBar";
 import Cookies from "js-cookie"; // Import js-cookie
 
 const Navbar = () => {
   const router = useRouter();
   const twElementsLoaded = useTwElements();
   const [showAllCategories, setShowAllCategories] = useState(false);
-
-  const handleSeeAllClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setShowAllCategories(!showAllCategories);
-  };
 
   const { mutate } = useMutation(logout, {
     onSuccess: () => {
@@ -33,7 +27,6 @@ const Navbar = () => {
   const { isAdmin, userid } = useAuth();
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const cartData = useSelector((state: any) => state.cart.totalItem);
   const { data: profileData } = useQuery("userprofile", profile, {
     enabled: !!userid ? true : false,
   });
@@ -42,7 +35,7 @@ const Navbar = () => {
   };
 
   const handleLogoutClick = () => {
-    Cookies.remove("token"); // Clear the token cookie from the client side
+    Cookies.remove("token");
     mutate();
     dispatch(logoutSuccess());
   };
@@ -134,7 +127,7 @@ const Navbar = () => {
                           className="relative flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-offset-gray-800 text-slate-100"
                         >
                           <Image
-                            className="w-8 h-8 rounded-full"
+                            className="w-8 h-8 rounded-full object-cover"
                             src={
                               !!profileData?.data?.profile_image
                                 ? profileData?.data?.profile_image
