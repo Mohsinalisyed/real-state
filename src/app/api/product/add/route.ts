@@ -24,14 +24,14 @@ export async function POST(request: NextRequest) {
       name,
       price,
       description,
-      image: flattenedImageArray,
+      images: flattenedImageArray,
       category,
       size,
       location,
       addressline1,
       addressline2,
       city,
-      country
+      country,
     });
     const savedProduct = await newProduct.save();
     return NextResponse.json({

@@ -21,7 +21,7 @@ export default function ProfilePage() {
     isLoading,
     refetch,
   } = useQuery("adminprofile", profile);
-  const { imageUrl, setImageUrl, handleUpload, uploading } = useImageUpload();
+  const { imageUrls, setImageUrls, handleUpload, uploading } = useImageUpload();
 
   const updateDefaultValue = {
     first_name: profileData?.data?.first_name || "",
@@ -43,7 +43,7 @@ export default function ProfilePage() {
   });
   useEffect(() => {
     if (!isLoading && profileData?.data) {
-      setImageUrl(profileData?.data?.profile_image);
+      setImageUrls(profileData?.data?.profile_image);
       reset(updateDefaultValue);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,20 +56,20 @@ export default function ProfilePage() {
 
   const onSubmit = async (data: IProfile) => {
     const userId = profileData?.data?._id;
-    if (!imageUrl) {
+    if (!imageUrls) {
       setError("profile_image", { message: "This field is required" });
       return;
     }
     updateProfile({
-      updatedUser: { ...data, userId, profile_image: imageUrl },
+      updatedUser: { ...data, userId, profile_image: imageUrls },
     });
     refetch();
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files && e.target.files[0];
-    if (selectedFile) {
-      handleUpload(selectedFile);
+    const selectedFiles = e.target.files;
+    if (selectedFiles) {
+      handleUpload(selectedFiles);
     }
   };
   return (
@@ -94,15 +94,27 @@ export default function ProfilePage() {
                           htmlFor="dropzone-file"
                           className="rounded-full h-32 w-32 flex items-center justify-center bg-white"
                         >
-                          {imageUrl && !uploading ? (
-                            <Image
-                              src={imageUrl}
-                              alt="Sample image"
-                              className="rounded-full h-48 w-48 flex items-center justify-center bg-white"
-                              loader={({ src }) => `${src}?w=256&h=256`}
-                              width={256}
-                              height={256}
-                            />
+                          {imageUrls?.length && !uploading ? (
+                            <>
+                              {uploading ? (
+                                <div>Uploading...</div>
+                              ) : (
+
+                                <div>
+                                  {imageUrls?.map((url, index) => (
+                                    <Image
+                                      key={index}
+                                      src={url[0]}
+                                      alt={`Image ${index}`}
+                                      className="w-full p-2 mt-1 border rounded-md h-3/5"
+                                      loader={({ src }) => `${src}?w=256&h=256`}
+                                      width={256}
+                                      height={256}
+                                    />
+                                  ))}
+                                </div>
+                              )}
+                            </>
                           ) : (
                             <label htmlFor="dropzone-file">
                               {uploading ? (
