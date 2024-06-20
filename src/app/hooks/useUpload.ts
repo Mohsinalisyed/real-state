@@ -13,9 +13,12 @@ const useImageUpload = (): ImageUploadHookResult => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const { mutate, isLoading }: UseMutationResult = useMutation(uploadImage, {
     onSuccess: (data) => {
-      console.log("File uploaded successfully");
-      setImageUrls((prevUrls) => [...prevUrls, data.imageUrls]);
-    },
+  console.log("File uploaded successfully");
+  setImageUrls((prevUrls) => {
+    const updatedUrls = Array.isArray(prevUrls) ? [...prevUrls, ...data.imageUrls] : data.imageUrls;
+    return updatedUrls || []; // Ensure to fallback to an empty array if updatedUrls is null or undefined
+  });
+},
     onError: (error: any) => {
       console.error("Error uploading file", error);
     },

@@ -61,7 +61,7 @@ export default function ProfilePage() {
       return;
     }
     updateProfile({
-      updatedUser: { ...data, userId, profile_image: imageUrls },
+      updatedUser: { ...data, userId, profile_image: imageUrls.join(',') },
     });
     refetch();
   };
@@ -72,6 +72,7 @@ export default function ProfilePage() {
       handleUpload(selectedFiles);
     }
   };
+  console.log(imageUrls,'imageUrls')
   return (
     <Container>
       {twElementsLoaded &&
@@ -101,17 +102,14 @@ export default function ProfilePage() {
                               ) : (
 
                                 <div>
-                                  {imageUrls?.map((url, index) => (
                                     <Image
-                                      key={index}
-                                      src={url[0]}
-                                      alt={`Image ${index}`}
+                                      src={imageUrls.toString()}
+                                      alt={`Image`}
                                       className="w-full p-2 mt-1 border rounded-md h-3/5"
                                       loader={({ src }) => `${src}?w=256&h=256`}
                                       width={256}
                                       height={256}
                                     />
-                                  ))}
                                 </div>
                               )}
                             </>
