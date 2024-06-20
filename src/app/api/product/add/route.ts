@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       addressline1,
       addressline2,
       city,
-      country,
+      country
     });
     const savedProduct = await newProduct.save();
     return NextResponse.json({

@@ -160,8 +160,8 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
               <Spinner height="h-20" width="w-20" />
             </Box>
           ) : (
-            <Box className="flex flex-wrap items-center justify-center gap-6 lg:justify-between">
-              <Box className="mb-12 shrink-1 grow-0 basis-auto md:mb-0 md:w-4/12 md:shrink-0 lg:w-4/12 xl:w-4/12">
+            <Box className="flex flex-wrap justify-center gap-6 lg:justify-between">
+              <Box className="mt-12 shrink-1 grow-0 basis-auto md:mb-0 md:w-4/12 md:shrink-0 lg:w-4/12 xl:w-4/12">
                 <Box className="flex items-center justify-center w-full">
                   <label
                     htmlFor="dropzone-file"
@@ -325,7 +325,7 @@ const ProductForm: React.FC<IForm> = ({ productId, objectId }) => {
                   )}
                 </Box>
                 {/* Add Product button */}
-                <Box className="text-center lg:text-left">
+                <Box className="text-center lg:text-left mb-8">
                   <Button
                     type="submit"
                     className={button({ color: "primary" })}
